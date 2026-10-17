@@ -252,8 +252,24 @@
 
     .cards {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 16px;
+    }
+
+    .card-link {
+      display: block;
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .card-link:hover {
+      border-color: #7ee34f88;
+      transform: translateY(-3px);
+    }
+
+    .card-link:focus-visible {
+      outline: 3px solid var(--green);
+      outline-offset: 3px;
     }
 
     .card {
@@ -354,7 +370,7 @@
     }
 
     @media (max-width: 430px) {
-      .links a:nth-child(2) { display: none; }
+      .links a:nth-child(4) { display: none; }
       .brand { font-size: 1.2rem; }
       .server-chip { font-size: .78rem; gap: 7px; padding: 9px; }
       .btn { padding: 13px 17px; }
@@ -367,6 +383,8 @@
       <a class="brand" href="#home">⚔ <b>MC</b>-TOP</a>
       <div class="links">
         <a href="#modes">Game modes</a>
+        <a href="ranks.html">Player ranks</a>
+        <a href="duels.html">Duels</a>
         <a href="#join">How to join</a>
       </div>
     </nav>
@@ -410,12 +428,12 @@
         </div>
 
         <div class="cards">
-          <article class="card">
+          <a class="card card-link" href="duels.html" aria-label="Open Duels game modes">
             <div class="icon">🗡️</div>
-            <h3>Duels</h3>
+            <h3>Duels ↗</h3>
             <p>Quick one-on-one battles. Test your combos, movement, and nerves.</p>
-            <div class="status"><i></i> Queue up and fight</div>
-          </article>
+            <div class="status"><i></i> Open CPvP, Sword, UHC &amp; SMP</div>
+          </a>
 
           <article class="card">
             <div class="icon">🛡️</div>
@@ -429,6 +447,13 @@
             <h3>Practice</h3>
             <p>Warm up with the community and get your skills match-ready.</p>
             <div class="status"><i></i> Train at your pace</div>
+          </article>
+
+          <article class="card">
+            <div class="icon">🛏️</div>
+            <h3>BedWars</h3>
+            <p>Protect your bed, gather resources, and break through every rival team’s defense.</p>
+            <div class="status"><i></i> Defend. Rush. Win.</div>
           </article>
         </div>
       </div>
