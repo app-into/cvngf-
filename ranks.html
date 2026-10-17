@@ -1,0 +1,369 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#111014">
+  <title>MC-TOP Tiers — Player Ranks</title>
+
+  <style>
+    :root {
+      --bg: #111014;
+      --muted: #aaa5b0;
+      --text: #f8f5fb;
+      --line: #ffffff19;
+      --lime: #d1ff5c;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--text);
+      font-family: Inter, system-ui, "Segoe UI", sans-serif;
+      background: radial-gradient(ellipse at 50% -10%, #45401f 0, #1b191d 35%, #111014 75%);
+    }
+
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: min(1040px, 92%); margin: auto; }
+
+    header {
+      border-bottom: 1px solid var(--line);
+      background: #111014bb;
+      backdrop-filter: blur(10px);
+    }
+
+    nav {
+      height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand { font-size: 1.35rem; font-weight: 950; }
+    .brand b { color: var(--lime); }
+
+    .navlinks {
+      display: flex;
+      gap: 23px;
+      color: #d1cdd5;
+      font-size: .92rem;
+      font-weight: 700;
+    }
+
+    .navlinks a:hover { color: var(--lime); }
+    main { padding: 58px 0 85px; }
+    .hero { text-align: center; margin: 0 auto 36px; }
+
+    .tag {
+      color: var(--lime);
+      font-size: .72rem;
+      font-weight: 900;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 7vw, 5.6rem);
+      line-height: .94;
+      letter-spacing: -.065em;
+      margin: 12px 0;
+    }
+
+    .hero h1 span { color: var(--lime); }
+
+    .hero p {
+      margin: 0 auto;
+      max-width: 630px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .tier-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      margin: 0 0 15px;
+    }
+
+    .tier-head h2 { margin: 0; font-size: 1.35rem; }
+    .tier-head span { color: var(--muted); font-size: .85rem; }
+    .tier-list { display: grid; gap: 9px; }
+
+    .tier {
+      --c: #fff;
+      display: grid;
+      grid-template-columns: 88px 1fr;
+      min-height: 91px;
+      border: 1px solid color-mix(in srgb, var(--c), transparent 65%);
+      border-radius: 13px;
+      overflow: hidden;
+      background: linear-gradient(100deg, color-mix(in srgb, var(--c), #17151a 91%), #1b1920 38%);
+      animation: slide .55s both;
+      animation-delay: var(--delay);
+    }
+
+    .tier-id {
+      display: grid;
+      place-items: center;
+      background: color-mix(in srgb, var(--c), transparent 87%);
+      font-size: 2rem;
+      font-weight: 1000;
+      color: var(--c);
+      text-shadow: 0 0 20px color-mix(in srgb, var(--c), transparent 45%);
+    }
+
+    .tier-body {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 20px;
+      gap: 18px;
+    }
+
+    .tier-body strong { font-size: 1.05rem; }
+
+    .tier-body p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: .88rem;
+    }
+
+    .players {
+      display: flex;
+      gap: 7px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .players span {
+      font-size: .76rem;
+      color: #eee9f1;
+      border: 1px solid #ffffff22;
+      background: #ffffff08;
+      border-radius: 99px;
+      padding: 6px 9px;
+    }
+
+    .s { --c: #ff5b72; }
+    .a { --c: #ffae53; }
+    .b { --c: #f2db5a; }
+    .c { --c: #69db9b; }
+    .d { --c: #67bbff; }
+    .e { --c: #b7a4c8; }
+
+    .legend {
+      margin-top: 24px;
+      padding: 18px 20px;
+      border: 1px solid var(--line);
+      background: #17151a;
+      border-radius: 13px;
+      color: #c4bec9;
+      font-size: .88rem;
+      line-height: 1.6;
+    }
+
+    .legend strong { color: #fff; }
+
+    .spot {
+      margin-top: 30px;
+      border: 1px solid #d1ff5c55;
+      border-radius: 14px;
+      padding: 22px 24px;
+      background: linear-gradient(115deg, #30341c, #1c1a20);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .spot h2 { margin: 0 0 5px; }
+    .spot p { margin: 0; color: #bcb8b0; line-height: 1.5; }
+
+    .crown {
+      font-size: 2.7rem;
+      filter: drop-shadow(0 0 15px #d1ff5c55);
+      animation: bob 2.4s ease-in-out infinite;
+    }
+
+    .back {
+      display: block;
+      width: max-content;
+      margin: 30px auto 0;
+      color: var(--lime);
+      font-weight: 800;
+    }
+
+    footer {
+      text-align: center;
+      padding: 21px;
+      border-top: 1px solid var(--line);
+      color: #89838f;
+      font-size: .82rem;
+    }
+
+    @keyframes slide {
+      from { opacity: 0; transform: translateX(-16px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    @keyframes bob {
+      50% { transform: translateY(-6px) rotate(4deg); }
+    }
+
+    @media (max-width: 680px) {
+      .tier { grid-template-columns: 60px 1fr; }
+      .tier-id { font-size: 1.7rem; }
+      .tier-body {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 13px;
+      }
+      .players { justify-content: flex-start; }
+      .navlinks { gap: 12px; font-size: .82rem; }
+      .spot { align-items: flex-start; }
+      .tier-head span { display: none; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav class="wrap">
+      <a class="brand" href="index.html">⚔ <b>MC</b>-TOP</a>
+      <div class="navlinks">
+        <a href="index.html">Home</a>
+        <a href="duels.html">Duels</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <div class="hero">
+      <div class="tag">MC-TOP community tier list</div>
+      <h1>THE <span>TIERS</span></h1>
+      <p>
+        A fan-made showcase inspired by Minecraft PvP tier lists. These example
+        placements are for the MC-TOP site design and are not official test
+        results or verified rankings.
+      </p>
+    </div>
+
+    <div class="tier-head">
+      <h2>BedWars player tiers</h2>
+      <span>Top → bottom · sample layout</span>
+    </div>
+
+    <section class="tier-list" aria-label="BedWars tiers">
+      <article class="tier s" style="--delay:0s">
+        <div class="tier-id">S</div>
+        <div class="tier-body">
+          <div>
+            <strong>Legend</strong>
+            <p>Exceptional mechanics and match control</p>
+          </div>
+          <div class="players">
+            <span>Technoblade · legacy</span>
+            <span>Purpled</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="tier a" style="--delay:.06s">
+        <div class="tier-id">A</div>
+        <div class="tier-body">
+          <div>
+            <strong>Elite</strong>
+            <p>High-level decisions and consistent pressure</p>
+          </div>
+          <div class="players">
+            <span>Gamerboy80</span>
+            <span>Wallibear</span>
+            <span>Hannahxxrose</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="tier b" style="--delay:.12s">
+        <div class="tier-id">B</div>
+        <div class="tier-body">
+          <div>
+            <strong>Advanced</strong>
+            <p>Strong fundamentals and reliable team play</p>
+          </div>
+          <div class="players">
+            <span>SammyGreen</span>
+            <span>BedlessNoob</span>
+          </div>
+        </div>
+      </article>
+
+      <article class="tier c" style="--delay:.18s">
+        <div class="tier-id">C</div>
+        <div class="tier-body">
+          <div>
+            <strong>Skilled</strong>
+            <p>Good mechanics, still building consistency</p>
+          </div>
+          <div class="players"><span>Community examples</span></div>
+        </div>
+      </article>
+
+      <article class="tier d" style="--delay:.24s">
+        <div class="tier-id">D</div>
+        <div class="tier-body">
+          <div>
+            <strong>Learning</strong>
+            <p>Getting comfortable with bridging and fights</p>
+          </div>
+          <div class="players"><span>Your next PB starts here</span></div>
+        </div>
+      </article>
+
+      <article class="tier e" style="--delay:.3s">
+        <div class="tier-id">E</div>
+        <div class="tier-body">
+          <div>
+            <strong>New challenger</strong>
+            <p>Every top player started with a first match</p>
+          </div>
+          <div class="players"><span>Join the ladder</span></div>
+        </div>
+      </article>
+    </section>
+
+    <div class="legend">
+      <strong>About the list:</strong>
+      Names are examples of well-known creators associated with BedWars content.
+      Their placement here is illustrative and is not a claim of an official
+      MC-TOP rank, current competitive standing, or affiliation with this server.
+    </div>
+
+    <section class="spot">
+      <div>
+        <div class="tag">Legacy spotlight</div>
+        <h2>Technoblade</h2>
+        <p>
+          A widely known Minecraft creator remembered for Hypixel BedWars
+          content and a notable winstreak.
+        </p>
+      </div>
+      <div class="crown" aria-hidden="true">👑🐷</div>
+    </section>
+
+    <a class="back" href="index.html">← Back to MC-TOP home</a>
+  </main>
+
+  <footer>
+    MC-TOP · Fan-made community tiers · Not affiliated with Mojang or Microsoft.
+  </footer>
+</body>
+</html>
