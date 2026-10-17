@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#111014">
   <title>MC-TOP Tiers — Player Ranks</title>
-
   <style>
     :root {
       --bg: #111014;
@@ -45,13 +44,37 @@
 
     .navlinks {
       display: flex;
-      gap: 23px;
+      gap: 15px;
+      align-items: center;
       color: #d1cdd5;
       font-size: .92rem;
       font-weight: 700;
     }
 
     .navlinks a:hover { color: var(--lime); }
+
+    .discord-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border: 1px solid #5865f255;
+      border-radius: 999px;
+      background: #5865f21c;
+      color: #dce2ff !important;
+      font-weight: 800;
+      white-space: nowrap;
+      transition: transform .18s, background .18s;
+    }
+
+    .discord-link:hover {
+      background: #5865f238;
+      transform: translateY(-2px);
+    }
+
+    .discord-link svg { width: 19px; height: 19px; display: block; flex: none; }
+
     main { padding: 58px 0 85px; }
     .hero { text-align: center; margin: 0 auto 36px; }
 
@@ -122,12 +145,7 @@
     }
 
     .tier-body strong { font-size: 1.05rem; }
-
-    .tier-body p {
-      margin: 4px 0 0;
-      color: var(--muted);
-      font-size: .88rem;
-    }
+    .tier-body p { margin: 4px 0 0; color: var(--muted); font-size: .88rem; }
 
     .players {
       display: flex;
@@ -214,15 +232,16 @@
     @media (max-width: 680px) {
       .tier { grid-template-columns: 60px 1fr; }
       .tier-id { font-size: 1.7rem; }
-      .tier-body {
-        align-items: flex-start;
-        flex-direction: column;
-        padding: 13px;
-      }
+      .tier-body { align-items: flex-start; flex-direction: column; padding: 13px; }
       .players { justify-content: flex-start; }
-      .navlinks { gap: 12px; font-size: .82rem; }
+      .navlinks { gap: 10px; font-size: .82rem; }
       .spot { align-items: flex-start; }
       .tier-head span { display: none; }
+    }
+
+    @media (max-width: 430px) {
+      .discord-link { padding: 8px; }
+      .discord-link span { display: none; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -234,7 +253,6 @@
     }
   </style>
 </head>
-
 <body>
   <header>
     <nav class="wrap">
@@ -242,6 +260,14 @@
       <div class="navlinks">
         <a href="index.html">Home</a>
         <a href="duels.html">Duels</a>
+        <a class="discord-link" href="https://discord.gg/z9vAVZFjs"
+           target="_blank" rel="noopener noreferrer"
+           aria-label="Join the MC-TOP Discord server">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path fill="currentColor" d="M19.73 5.34a18.2 18.2 0 0 0-4.5-1.4l-.57 1.16a16.9 16.9 0 0 0-5.3 0L8.8 3.94a18.2 18.2 0 0 0-4.5 1.4C1.45 9.55.68 13.66 1.06 17.71a18.3 18.3 0 0 0 5.52 2.8l1.19-1.94a11.9 11.9 0 0 1-1.87-.9l.46-.36a13.1 13.1 0 0 0 11.28 0l.47.36a11.9 11.9 0 0 1-1.88.9l1.19 1.94a18.3 18.3 0 0 0 5.52-2.8c.46-4.7-.78-8.77-3.21-12.37ZM8.55 15.2c-1.1 0-2-.99-2-2.2s.88-2.2 2-2.2 2.02.99 2 2.2c0 1.21-.88 2.2-2 2.2Zm6.9 0c-1.1 0-2-.99-2-2.2s.88-2.2 2-2.2 2.02.99 2 2.2c0 1.21-.88 2.2-2 2.2Z"/>
+          </svg>
+          <span>Discord</span>
+        </a>
       </div>
     </nav>
   </header>
