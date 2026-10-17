@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0a1018">
+  <title>Duels &amp; PvP Players — MC-TOP</title>
+
+  <style>
+    :root {
+      --bg: #0a1018;
+      --panel: #111c27;
+      --text: #f1f7ff;
+      --muted: #a1b4c8;
+      --cyan: #4ee7e1;
+      --line: #d1eaff1d;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: radial-gradient(ellipse at 50% -15%, #163f50 0, #0b1722 37%, #0a1018 74%);
+      color: var(--text);
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: min(1120px, 92%); margin: auto; }
+
+    header {
+      border-bottom: 1px solid var(--line);
+      background: #09131cbb;
+      backdrop-filter: blur(12px);
+    }
+
+    nav {
+      height: 73px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .brand { font-size: 1.35rem; font-weight: 950; }
+    .brand b { color: var(--cyan); }
+
+    .navlinks {
+      display: flex;
+      gap: 23px;
+      color: #c9d8e6;
+      font-weight: 700;
+      font-size: .92rem;
+    }
+
+    .navlinks a:hover { color: var(--cyan); }
+
+    .hero {
+      text-align: center;
+      padding: 66px 0 40px;
+    }
+
+    .eyebrow {
+      font-size: .75rem;
+      color: var(--cyan);
+      letter-spacing: .17em;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 8vw, 6rem);
+      line-height: .94;
+      letter-spacing: -.06em;
+      margin: 12px 0;
+    }
+
+    .hero h1 span { color: var(--cyan); }
+
+    .hero p {
+      max-width: 690px;
+      margin: 0 auto;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .modes {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 13px;
+      margin: 0 0 36px;
+    }
+
+    .mode {
+      --accent: var(--cyan);
+      text-align: left;
+      border: 1px solid color-mix(in srgb, var(--accent), transparent 62%);
+      border-radius: 14px;
+      padding: 19px;
+      background: linear-gradient(145deg, color-mix(in srgb, var(--accent), #101820 91%), #111c27);
+      min-height: 171px;
+      transition: transform .2s, border-color .2s;
+    }
+
+    .mode:hover {
+      transform: translateY(-5px);
+      border-color: var(--accent);
+    }
+
+    .mode:nth-child(2) { --accent: #ffb45e; }
+    .mode:nth-child(3) { --accent: #c693ff; }
+    .mode:nth-child(4) { --accent: #83e885; }
+
+    .mode .icon { font-size: 1.7rem; }
+
+    .mode h2 {
+      font-size: 1.1rem;
+      margin: 12px 0 6px;
+      color: var(--accent);
+    }
+
+    .mode p {
+      font-size: .85rem;
+      color: var(--muted);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    .roster-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 18px;
+      margin: 42px 0 15px;
+    }
+
+    .roster-head h2 {
+      font-size: 1.65rem;
+      margin: 0;
+    }
+
+    .roster-head p {
+      color: var(--muted);
+      font-size: .86rem;
+      margin: 5px 0 0;
+    }
+
+    .tools { display: flex; gap: 9px; }
+
+    .tools input,
+    .tools select {
+      background: #101c28;
+      border: 1px solid #b3dfff33;
+      border-radius: 8px;
+      padding: 10px 12px;
+      color: var(--text);
+      font: inherit;
+      outline: none;
+    }
+
+    .tools input:focus,
+    .tools select:focus {
+      border-color: var(--cyan);
+    }
+
+    .tools select option { background: #101c28; }
+
+    .count {
+      color: var(--cyan);
+      font-size: .8rem;
+      font-weight: 800;
+      margin-bottom: 12px;
+    }
+
+    .roster {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 9px;
+    }
+
+    .player {
+      min-height: 79px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 12px;
+      background: linear-gradient(145deg, #142332, #101923);
+      animation: appear .35s both;
+    }
+
+    .player:hover {
+      border-color: #4ee7e155;
+      transform: translateY(-2px);
+    }
+
+    .player strong {
+      display: block;
+      font-size: .9rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .player span {
+      display: inline-block;
+      margin-top: 7px;
+      font-size: .67rem;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: var(--cyan);
+      font-weight: 850;
+    }
+
+    .player[data-mode="Sword"] span { color: #ffb45e; }
+    .player[data-mode="UHC"] span { color: #c693ff; }
+    .player[data-mode="SMP"] span { color: #83e885; }
+
+    .note {
+      margin: 20px 0 0;
+      color: #8da1b5;
+      font-size: .82rem;
+      line-height: 1.6;
+      border: 1px solid var(--line);
+      background: #101923aa;
+      padding: 15px 17px;
+      border-radius: 10px;
+    }
+
+    .back {
+      display: block;
+      width: max-content;
+      margin: 34px auto 55px;
+      color: var(--cyan);
+      font-weight: 800;
+    }
+
+    footer {
+      text-align: center;
+      border-top: 1px solid var(--line);
+      padding: 21px;
+      color: #8195a8;
+      font-size: .82rem;
+    }
+
+    @keyframes appear {
+      from { opacity: 0; transform: translateY(9px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 900px) {
+      .roster { grid-template-columns: repeat(4, 1fr); }
+      .modes { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 620px) {
+      .roster { grid-template-columns: repeat(2, 1fr); }
+      .roster-head {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+      .tools { width: 100%; }
+      .tools input { flex: 1; min-width: 0; }
+      .navlinks { gap: 12px; font-size: .82rem; }
+      .hero { padding-top: 49px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav class="wrap">
+      <a class="brand" href="index.html">⚔ <b>MC</b>-TOP</a>
+      <div class="navlinks">
+        <a href="index.html">Home</a>
+        <a href="ranks.html">Player tiers</a>
+      </div>
+    </nav>
+  </header>
+
+  <main class="wrap">
+    <section class="hero">
+      <div class="eyebrow">Four modes. One arena.</div>
+      <h1>DUELS <span>&amp; PvP</span></h1>
+      <p>
+        Pick your kit and find your fight. Browse the starter showcase of
+        players associated with these PvP styles.
+      </p>
+    </section>
+
+    <section class="modes" aria-label="Duels modes">
+      <article class="mode">
+        <div class="icon">💎</div>
+        <h2>CPvP</h2>
+        <p>Crystal placement, quick decisions, and explosive combos.</p>
+      </article>
+
+      <article class="mode">
+        <div class="icon">⚔️</div>
+        <h2>Sword</h2>
+        <p>Classic sword fights built on aim, movement, and timing.</p>
+      </article>
+
+      <article class="mode">
+        <div class="icon">🥇</div>
+        <h2>UHC</h2>
+        <p>Resource management and high-pressure melee combat.</p>
+      </article>
+
+      <article class="mode">
+        <div class="icon">🌿</div>
+        <h2>SMP</h2>
+        <p>Survival-server battles where preparation matters.</p>
+      </article>
+    </section>
+
+    <section>
+      <div class="roster-head">
+        <div>
+          <h2>Player showcase</h2>
+          <p>Search the names or filter by PvP style.</p>
+        </div>
+
+        <div class="tools">
+          <input id="search" type="search" placeholder="Search player…" aria-label="Search players">
+          <select id="filter" aria-label="Filter by game mode">
+            <option value="all">All styles</option>
+            <option>CPvP</option>
+            <option>Sword</option>
+            <option>UHC</option>
+            <option>SMP</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="count" id="count">50 community examples</div>
+      <div class="roster" id="roster" aria-live="polite"></div>
+
+      <p class="note">
+        <strong>About this showcase:</strong>
+        These are public Minecraft creators or PvP community names for an
+        example roster. This is not an official MC-TOP player list, a verified
+        current ranking, or an endorsement. Some names are known across
+        multiple modes; each appears once here with a representative style tag.
+      </p>
+    </section>
+
+    <a class="back" href="index.html">← Back to MC-TOP home</a>
+  </main>
+
+  <footer>
+    MC-TOP · Duels · Not affiliated with Mojang or Microsoft.
+  </footer>
+
+  <script>
+    const players = [
+      ["ClownPierce", "CPvP"],
+      ["ItzRealMe", "CPvP"],
+      ["Rasplin", "CPvP"],
+      ["Marlowww", "CPvP"],
+      ["ManePear", "CPvP"],
+      ["Minemanner", "CPvP"],
+      ["Doly", "CPvP"],
+      ["Kylaz", "CPvP"],
+      ["Sword4000", "CPvP"],
+      ["Luvonox", "CPvP"],
+      ["Bop", "CPvP"],
+      ["Doomsday", "CPvP"],
+      ["Kelawesome", "CPvP"],
+
+      ["Intel Edits", "Sword"],
+      ["Stimpy", "Sword"],
+      ["Huahwi", "Sword"],
+      ["Calvin", "Sword"],
+      ["Danteh", "Sword"],
+      ["GameFreak", "Sword"],
+      ["Jewdah", "Sword"],
+      ["Viper", "Sword"],
+      ["Tylarzz", "Sword"],
+      ["Muffinhacks", "Sword"],
+      ["Badlioncheat", "Sword"],
+      ["xNestorio", "Sword"],
+      ["Purpled", "Sword"],
+
+      ["Grapeapplesauce", "UHC"],
+      ["SpecularPotato", "UHC"],
+      ["BajanCanadian", "UHC"],
+      ["JeromeASF", "UHC"],
+      ["Vikkstar123", "UHC"],
+      ["TapL", "UHC"],
+      ["Huahwi UHC", "UHC"],
+      ["Danteh UHC", "UHC"],
+      ["Stimpy UHC", "UHC"],
+      ["Vape", "UHC"],
+      ["Cxlvxn", "UHC"],
+      ["Zeb", "UHC"],
+
+      ["Wemmbu", "SMP"],
+      ["Parrot", "SMP"],
+      ["Rekrap2", "SMP"],
+      ["Spoke", "SMP"],
+      ["Vitalasy", "SMP"],
+      ["SB737", "SMP"],
+      ["Branzy", "SMP"],
+      ["MinuteTech", "SMP"],
+      ["FlameFrags", "SMP"],
+      ["PrinceZam", "SMP"],
+      ["Mapicc", "SMP"],
+      ["Kaboodle", "SMP"]
+    ];
+
+    const root = document.getElementById("roster");
+    const search = document.getElementById("search");
+    const filter = document.getElementById("filter");
+    const count = document.getElementById("count");
+
+    function renderPlayers() {
+      const query = search.value.trim().toLowerCase();
+      const mode = filter.value;
+
+      const shown = players.filter(([name, tag]) => {
+        const matchesMode = mode === "all" || mode === tag;
+        const matchesSearch = name.toLowerCase().includes(query);
+        return matchesMode && matchesSearch;
+      });
+
+      root.innerHTML = shown.map(([name, tag], index) => `
+        <article class="player" data-mode="${tag}"
+          style="animation-delay:${Math.min(index, 18) * .018}s">
+          <strong>${name}</strong>
+          <span>${tag}</span>
+        </article>
+      `).join("");
+
+      count.textContent =
+        `${shown.length} ${shown.length === 1 ? "player" : "players"} shown · ` +
+        `${players.length} community examples`;
+    }
+
+    search.addEventListener("input", renderPlayers);
+    filter.addEventListener("change", renderPlayers);
+    renderPlayers();
+  </script>
+</body>
+</html>
